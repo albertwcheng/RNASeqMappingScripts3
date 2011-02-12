@@ -66,15 +66,15 @@ for sample in ${samples[*]}; do
 
 		header="#!/bin/bash"		
 
-		commandAlnL="bwa aln -n $ALN_N -o $ALN_o -e $ALN_e -d $ALN_d -i $ALN_i $ALN_l_FLAG -k $ALN_k -t $ALN_t -M $ALN_M -O $ALN_O -E $ALN_E $ALN_R_FLAG $ALN_c_FLAG $ALN_N_FLAG -q $ALN_q $genome $fastqDir/${lfile} > $saiDir/${lfile/.fastq/.sai} 2> $saiDir/${lfile/.fastq/.err}; echo done >> $saiDir/${lfile/.fastq/.err};"
+		commandAlnL="$bwa_command aln $solexa_flag -n $ALN_N -o $ALN_o -e $ALN_e -d $ALN_d -i $ALN_i $ALN_l_FLAG -k $ALN_k -t $ALN_t -M $ALN_M -O $ALN_O -E $ALN_E $ALN_R_FLAG $ALN_c_FLAG $ALN_N_FLAG -q $ALN_q $genome $fastqDir/${lfile} > $saiDir/${lfile/.fastq/.sai} 2> $saiDir/${lfile/.fastq/.err}; echo done >> $saiDir/${lfile/.fastq/.err};"
 		
-		commandAlnR="bwa aln -n $ALN_N -o $ALN_o -e $ALN_e -d $ALN_d -i $ALN_i $ALN_l_FLAG -k $ALN_k -t $ALN_t -M $ALN_M -O $ALN_O -E $ALN_E $ALN_R_FLAG $ALN_c_FLAG $ALN_N_FLAG -q $ALN_q $genome $fastqDir/${rfile} > $saiDir/${rfile/.fastq/.sai} 2> $saiDir/${rfile/.fastq/.err}; echo done >> $saiDir/${rfile/.fastq/.err};"
+		commandAlnR="$bwa_command aln $solexa_flag -n $ALN_N -o $ALN_o -e $ALN_e -d $ALN_d -i $ALN_i $ALN_l_FLAG -k $ALN_k -t $ALN_t -M $ALN_M -O $ALN_O -E $ALN_E $ALN_R_FLAG $ALN_c_FLAG $ALN_N_FLAG -q $ALN_q $genome $fastqDir/${rfile} > $saiDir/${rfile/.fastq/.sai} 2> $saiDir/${rfile/.fastq/.err}; echo done >> $saiDir/${rfile/.fastq/.err};"
 		
-		commandSamseL="bwa samse -n $SAMSE_n $genome $saiDir/${lfile/.fastq/.sai} $fastqDir/${lfile} > $sampleSamseOutDir/${lfile/.fastq/.sam} 2> $sampleSamseOutDir/${lfile/.fastq/.stderr}; echo done >> $sampleSamseOutDir/${lfile/.fastq/.stderr};"	
+		commandSamseL="$bwa_command samse -n $SAMSE_n $genome $saiDir/${lfile/.fastq/.sai} $fastqDir/${lfile} > $sampleSamseOutDir/${lfile/.fastq/.sam} 2> $sampleSamseOutDir/${lfile/.fastq/.stderr}; echo done >> $sampleSamseOutDir/${lfile/.fastq/.stderr};"	
 		
-		commandSamseR="bwa samse -n $SAMSE_n $genome $saiDir/${rfile/.fastq/.sai} $fastqDir/${rfile} > $sampleSamseOutDir/${rfile/.fastq/.sam} 2> $sampleSamseOutDir/${rfile/.fastq/.stderr}; echo done >> $sampleSamseOutDir/${rfile/.fastq/.stderr};"	
+		commandSamseR="$bwa_command samse -n $SAMSE_n $genome $saiDir/${rfile/.fastq/.sai} $fastqDir/${rfile} > $sampleSamseOutDir/${rfile/.fastq/.sam} 2> $sampleSamseOutDir/${rfile/.fastq/.stderr}; echo done >> $sampleSamseOutDir/${rfile/.fastq/.stderr};"	
 		
-		commandSampe="bwa sampe -a $SAMPE_a -o $SAMPE_o $genome $saiDir/${lfile/.fastq/.sai} $saiDir/${rfile/.fastq/.sai} $fastqDir/${lfile} $fastqDir/${rfile} > $sampleSampeOutDir/${sample}.sam 2> $sampleSampeOutDir/${sample}.stderr; echo done >> $sampleSampeOutDir/${sample}.stderr;"
+		commandSampe="$bwa_command sampe -a $SAMPE_a -o $SAMPE_o $genome $saiDir/${lfile/.fastq/.sai} $saiDir/${rfile/.fastq/.sai} $fastqDir/${lfile} $fastqDir/${rfile} > $sampleSampeOutDir/${sample}.sam 2> $sampleSampeOutDir/${sample}.stderr; echo done >> $sampleSampeOutDir/${sample}.stderr;"
 
 		#commandSampe="bwa sampe -a $SAMPE_a -o $SAMPE_o $genome $saiDir/${lfile/.fastq/.sai} $saiDir/${rfile/.fastq/.sai} $fastqDir/${lfile} $fastqDir/${rfile} > $sampleSampeOutDir/${lfile/_1.fastq/.sam} 2> $sampleSampeOutDir/${lfile/_1.fastq/.stderr}; echo done >> $sampleSampeOutDir/${lfile/_1.fastq/.stderr};"
 
@@ -100,7 +100,7 @@ for sample in ${samples[*]}; do
 
 		#qsubcommand="qsub -e $queueJobStdWritePath/$sample.bwa.err -m a -M $queueJobEmail -o queueJobStdWritePath/$sample.bwa.out $tmpshName"
 				
-		bsubcommand="bsub bash $tmpshName"
+		bsubcommand="$bsub_command -q $jobQueue $tmpshName"
 		echo $bsubcommand
 		eval $bsubcommand
 	done

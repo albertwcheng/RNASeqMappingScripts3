@@ -31,7 +31,7 @@ maq="maq" # in path??
 
 queueJobEmail=albertwcheng@gmail.com ####
 queueJobStdWritePath=/mit/awcheng #####
-jobQueue=short  ####
+jobQueue=long  ####
 
 samFileBaseName=accepted_hits.sam
 

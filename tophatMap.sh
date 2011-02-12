@@ -4,6 +4,8 @@ source fileUtils.sh
 source ./initvars.sh
 source $tophatshvar
 
+
+
 if [ ! -e $tophatOutputDir ];then
 	mkdir $tophatOutputDir
 fi
@@ -39,7 +41,8 @@ for sample in ${samples[*]}; do
 	bsubcommand="$scriptDir/tophatMapJobArgList.sh ${sample} $lfilelist $rfilelist $scriptDir"
 	echo "#!/bin/bash" > 	$tophatOutputDir/${sample}/bsub.command.sh
 	echo $bsubcommand >> $tophatOutputDir/${sample}/bsub.command.sh
-	$bsub_command $tophatOutputDir/${sample}/bsub.command.sh
+	echo submitting job to $queue_name
+	$bsub_command -q $jobQueue $tophatOutputDir/${sample}/bsub.command.sh
 
 	
 	###nodenum=`expr $nodenum + 1`

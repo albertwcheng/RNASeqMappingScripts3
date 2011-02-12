@@ -19,7 +19,7 @@ for sample in ${samples[@]}; do
 
 		##PBS -v SAMINPREFIX,SAMSEOUTPREFIX,QTHRESHOLD,SAMPLE,SCRIPTDIR
 		#qsubcommand="qsub  -v SAMINPREFIX=\"$samseDir/\",SAMSEOUTPREFIX=\"$samseDirOutCoyote/\",QTHRESHOLD=$Qt,SAMPLE=\"$sample\",SCRIPTDIR=\"$scriptDir\" -q $jobQueue  -m a -M $queueJobEmail $scriptDir/bwaQsCoyoteJob.sh" ###-l nodes=$nodehostname	 -l nodes=${okNodes[dice]}
-		qsubcommand="bsub bash $scriptDir/bwaQsCoyoteJob.sh $samseDir $samseDirOutCoyote $Qt $sample $scriptDir" ###-l nodes=$nodehostname	 -l nodes=${okNodes[dice]}
+		qsubcommand="echo $scriptDir/bwaQsCoyoteJob.sh $samseDir $samseDirOutCoyote $Qt $sample $scriptDir | $bsub_command" ###-l nodes=$nodehostname	 -l nodes=${okNodes[dice]}
 		echo $qsubcommand
 		eval $qsubcommand
 	done
