@@ -46,11 +46,16 @@ if [[ $paired == 1 ]]; then
 	thisScripturePath=${scriptureOutputDir}/${sampleName}_paired  #path name to differentiate the unpaired ones
 	mkdir $thisScripturePath
 	
-	
+	target_sam1=${tophatOutputDir}/${sampleNameL}/${targetSam}
+	target_sam2=${tophatOutputDir}/${sampleNameR}/${targetSam} 
+	#for the new tophat, need to convert back to sam file
+	samtools view -h -o $target_sam1 ${target_sam1/.sam/}.bam
+	samtools view -h -o $target_sam2 ${target_sam2/.sam/}.bam
+
 
 	#now remove @ and sort by readname
-	sed '1,2d' ${tophatOutputDir}/${sampleNameL}/${targetSam} | sort > ${thisScripturePath}/sorted.1.sam
-	sed '1,2d' ${tophatOutputDir}/${sampleNameR}/${targetSam} | sort > ${thisScripturePath}/sorted.2.sam
+	sed '1,2d' $target_sam1 | sort > ${thisScripturePath}/sorted.1.sam
+	sed '1,2d' $target_sam2 | sort > ${thisScripturePath}/sorted.2.sam
 	
 	#run scripture makePairedFile task
 	scripture -task makePairedFile -pair1 ${thisScripturePath}/sorted.1.sam -pair2 ${thisScripturePath}/sorted.2.sam -out ${thisScripturePath}/paired.sam -sorted
