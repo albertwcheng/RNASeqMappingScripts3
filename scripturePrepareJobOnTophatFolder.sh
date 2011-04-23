@@ -48,9 +48,14 @@ if [[ $paired == 1 ]]; then
 	
 	target_sam1=${tophatOutputDir}/${sampleNameL}/${targetSam}
 	target_sam2=${tophatOutputDir}/${sampleNameR}/${targetSam} 
+	
 	#for the new tophat, need to convert back to sam file
-	samtools view -h -o $target_sam1 ${target_sam1/.sam/}.bam
-	samtools view -h -o $target_sam2 ${target_sam2/.sam/}.bam
+	if [ ! -e $target_sam1 ]; then
+		samtools view -h -o $target_sam1 ${target_sam1/.sam/}.bam
+	fi
+	if [ ! -e $target_sam2 ]; then
+		samtools view -h -o $target_sam2 ${target_sam2/.sam/}.bam
+	fi
 
 
 	#now remove @ and sort by readname
