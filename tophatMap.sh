@@ -38,11 +38,11 @@ for sample in ${samples[*]}; do
 	
 	mkdir $tophatOutputDir/${sample}
 	
-	bsubcommand="$scriptDir/tophatMapJobArgList.sh ${sample} $lfilelist $rfilelist $scriptDir"
+	bsubcommand="bash $scriptDir/tophatMapJobArgList.sh ${sample} $lfilelist $rfilelist $scriptDir"
 	echo "#!/bin/bash" > 	$tophatOutputDir/${sample}/bsub.command.sh
 	echo $bsubcommand >> $tophatOutputDir/${sample}/bsub.command.sh
-	echo submitting job to $queue_name
-	$bsub_command -q $jobQueue $tophatOutputDir/${sample}/bsub.command.sh
+	#echo submitting job to $queue_name
+	bsub bash  $tophatOutputDir/${sample}/bsub.command.sh #-q $jobQueue
 
 	
 	###nodenum=`expr $nodenum + 1`

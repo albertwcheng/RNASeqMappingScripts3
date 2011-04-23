@@ -4,6 +4,10 @@ source fileUtils.sh
 source ./initvars.sh
 source $tophatshvar
 
+
+if [ ! -e $tophatOutputDir ];then
+	mkdir $tophatOutputDir
+fi
 #requestEmptyDirWithWarning $tophatOutputDir
 
 saveIFS=$IFS

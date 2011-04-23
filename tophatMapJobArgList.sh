@@ -38,15 +38,15 @@ cd $fastqDir ##use fastq dir the more standard one
 
 
 #$solexa_quality_flag
-command="$tophat_command $solexa_quality_flag $butterfly_search_flag $microexon_search_flag $no_novel_juncs_flag --mate-inner-dist $mate_inner_dist --mate-std-dev $mate_std_dev --min-anchor-length $min_anchor_length --min-isoform-fraction $min_isoform_fraction --num-threads $num_threads --max-multihits $max_multihits $GFF_flag $JUNCS_flag  $other_options --output-dir $sampleOutputDir $BOWTIE_INDEXES/$ebwt_base $lfilelist $rfilelist >> $stdout_file 2>> $stderr_file"
+command="tophat $solexa_quality_flag $butterfly_search_flag $microexon_search_flag $no_novel_juncs_flag --mate-inner-dist $mate_inner_dist --mate-std-dev $mate_std_dev --min-anchor-length $min_anchor_length --min-isoform-fraction $min_isoform_fraction --num-threads $num_threads --max-multihits $max_multihits $GFF_flag $JUNCS_flag  $other_options --output-dir $sampleOutputDir $BOWTIE_INDEXES/$ebwt_base $lfilelist $rfilelist >> $stdout_file 2>> $stderr_file" #$tophat_command
 
 
 
 
 echo $command > $stdout_file
 echo $command > $stderr_file
-echo "PATH=${PATH}" >> $stderr_file
-echo tophat=`which tophat` >> $stderr_file
+#echo "PATH=${PATH}" >> $stderr_file
+#echo tophat=`which tophat` >> $stderr_file
 
 
 date >> $stdout_file
