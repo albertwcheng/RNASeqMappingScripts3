@@ -67,8 +67,14 @@ cd $scriptureOutputDir
 echo "convert all_aligmnents.sam to all_aligments.bam"
 samtools view -b -S -t $chromList -o all_alignments.bam all_alignments.sam
 
+#all_aligments.sam needed no more: delete it to free space
+rm all_alignments.sam
+
 echo "sort all_alignments.bam as all_alignments.sorted.bam"
 samtools sort all_alignments.bam all_alignments.sorted
+
+#all_aligments.bam needed no more: delete it to free space
+rm all_alignments.bam
 
 echo "index all_alignments.sorted.bam as all_alignments.sorted.bam.bai"
 samtools index all_alignments.sorted.bam
@@ -96,8 +102,14 @@ if [[ $paired == 1 ]]; then
 	echo "convert all_alignments.paired.sam to all_alignments.paired.bam"
 	samtools view -b -S -t $chromList -o all_alignments.paired.bam all_alignments.paired.sam
 	
+	#all_alignments.paired.sam no longer needed. remove it
+	rm all_alignments.paired.sam
+	
 	echo "sort all_alignments.paired.bam as all_alignments.paired.sorted.bam"
 	samtools sort all_alignments.paired.bam all_alignments.paired.sorted
+	
+	# all_alignments.paired.bam no longer needed. remove
+	rm  all_alignments.paired.bam
 	
 	echo "index all_alignments.paired.sorted.bam as all_alignments.sorted.bam.bai"
 	samtools index all_alignments.paired.sorted.bam
