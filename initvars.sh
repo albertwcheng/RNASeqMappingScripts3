@@ -24,7 +24,9 @@ samseDirOutCoyote=$rootDir/samse #/srv/crate-01/data/burge-stuff/awcheng/JohanDa
 tophatshvar=$logDir/tophat.shvar
 
 #tophatOutputDir=$rootDir/tophatOutput2
-tophatOutputDir=$rootDir/tophatOutput #/srv/crate-01/data/burge-stuff/awcheng/tophatOutput #    /net/crate-01/data/burge-stuff/awcheng/tophatOutput #####
+tophatOutputDir=$rootDir/tophatOutput
+bowtieOutputDir=$rootDir/bowtieOutput
+ #/srv/crate-01/data/burge-stuff/awcheng/tophatOutput #    /net/crate-01/data/burge-stuff/awcheng/tophatOutput #####
 cuffLinkOutputDir=#/srv/crate-01/data/burge-stuff/awcheng/cuffLinkOutput #    /net/crate-01/data/burge-stuff/awcheng/cuffLinkOutput ####
 
 maq="maq" # in path??
