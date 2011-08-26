@@ -34,7 +34,7 @@ cd $fastqDir ##use fastq dir the more standard one
 echo BOWTIE_INDEXES=$BOWTIE_INDEXES
 
 #$solexa_quality_flag
-command="bowtie $other_options $BOWTIE_INDEXES $lfilelist $bowtieOutputDir/$sampleName/accepted_hits.sam >> $stdout_file 2>> $stderr_file"
+command="bowtie $other_options $BOWTIE_INDEXES/$ebwt_base $lfilelist $bowtieOutputDir/$sampleName/accepted_hits.sam >> $stdout_file 2>> $stderr_file"
 
 
 
