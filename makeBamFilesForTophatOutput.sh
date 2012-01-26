@@ -20,6 +20,13 @@ cd $MISOPATH
 for sampleDir in $tophatOutputDir/*; do
 
 if [ ! -e $sampleDir/accepted_hits.sam ];  then
+	#continue
+	if [ -e $sampleDir/accepted_hits.bam ]; then
+		#just sort and index
+		samtools sort $sampleDir/accepted_hits.bam $sampleDir/accepted_hits.sorted
+		samtools index $sampleDir/accepted_hits.sorted.bam
+	fi
+	
 	continue
 fi
 
