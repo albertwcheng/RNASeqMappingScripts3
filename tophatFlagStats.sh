@@ -31,4 +31,6 @@ done
 
 if [[ $firstline == 0 ]]; then
 	cat $tophatOutputDir/flagstat.summary
+else
+	echo "run this again after all jobs finish"
 fi
