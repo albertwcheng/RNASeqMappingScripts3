@@ -20,10 +20,24 @@ for sampleName in `ls -d *`; do
 	
 	if [ -e $i.flagstat ]; then
 		if [[ $firstline == 1 ]]; then
-			awk -v FS="\t" -v FS=" " 'BEGIN{printf("sampleName");}{lineData=""; for(i=2;i<=NF;i++){lineData=lineData $i " ";} printf("\t%s",lineData);}END{printf("\n");}' $i.flagstat > $tophatOutputDir/flagstat.summary
+			awk -v FS="\t" -v FS=" " 'BEGIN{printf("sampleName\torigRead1\torigRead2");}{lineData=""; for(i=2;i<=NF;i++){lineData=lineData $i " ";} printf("\t%s",lineData);}END{printf("\n");}' $i.flagstat > $tophatOutputDir/flagstat.summary
 			firstline=0
 		fi
-		awk -v FS="\t" -v FS=" " -v sampleName=$sampleName 'BEGIN{printf(sampleName);}{printf("\t%s",$1);}END{printf("\n");}' $i.flagstat >> $tophatOutputDir/flagstat.summary
+		
+		tp1=`tempfile`
+		cat $sampleName/left_kept_reads.info | tr -d " " > $tp1
+		source $tp1
+		
+		left_reads_in=$reads_in
+		
+		tp1=`tempfile`
+		cat $sampleName/right_kept_reads.info | tr -d " " > $tp1
+		source $tp1
+		
+		right_reads_in=$reads_in
+		
+				
+		awk -v FS="\t" -v FS=" " -v leftReadsIn=$left_reads_in -v rightReadsIn=$right_reads_in -v sampleName=$sampleName 'BEGIN{printf("%s\t%s\t%s",sampleName,leftReadsIn,rightReadsIn);}{printf("\t%s",$1);}END{printf("\n");}' $i.flagstat >> $tophatOutputDir/flagstat.summary
 	else
 		echo "samtools flagstat $i > $i.flagstat" | bsub
 	fi
