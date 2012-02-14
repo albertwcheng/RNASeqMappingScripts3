@@ -8,6 +8,7 @@ firstline=1
 
 cd $tophatOutputDir
 
+
 for sampleName in `ls -d *`; do
 	
 
@@ -39,14 +40,15 @@ for sampleName in `ls -d *`; do
 			right_reads_in=$reads_in
 			right_kept_reads=$reads_out
 			
-			read1Alignments=`tail -n 5 $i.nhits.txt | grep TotalAlignments | cut -f2`
+			read1Alignments=`tail -n 5 $i.nhits.txt | grep TotalAlignments | cut  -f2`
 			read2Alignments=`tail -n 5 $i.nhits.txt | grep TotalAlignments | cut -f3`
-			read1Mapped=`tail -n 5 $i.nhits.txt | grep TotalMapped | cut -f2`
-			read2Mapped=`tail -n 5 $i.nhits.txt | grep TotalMapped | cut -f3`
+			read1Mapped=`tail -n 5 $i.nhits.txt | awk -v FS="\t" '$1=="TotalMapped"' | cut -f2`
+			read2Mapped=`tail -n 5 $i.nhits.txt | awk -v FS="\t" '$1=="TotalMapped"' | cut -f3`
 			totalMappedReads=`tail -n 5 $i.nhits.txt | grep TotalMappedUnion | cut -f2`
 			
+			
 					
-			awk -v FS="\t" -v FS=" " -v read1Alignments=$read1Alignments -v read2Alignments=$read2Alignments -v read1Mapped=$read1Mapped -v read2Mapped=$read2Mapped -v leftReadsIn=$left_reads_in -v rightReadsIn=$right_reads_in -v leftKept=$left_kept_reads -v rightKept=$right_kept_reads -v sampleName=$sampleName -v totalMappedReads=$totalMappedReads 'BEGIN{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",sampleName,leftReadsIn,rightReadsIn,leftKept,rightKept,read1Alignments,read2Alignments,read1Mapped,read2Mapped,totalMappedReads);}{printf("\t%s",$1);}END{printf("\n");}' $i.flagstat >> $tophatOutputDir/flagstat.summary
+			awk -v FS="\t" -v OFS=" " -v read1Alignments=$read1Alignments -v read2Alignments=$read2Alignments -v read1Mapped=$read1Mapped -v read2Mapped=$read2Mapped -v leftReadsIn=$left_reads_in -v rightReadsIn=$right_reads_in -v leftKept=$left_kept_reads -v rightKept=$right_kept_reads -v sampleName=$sampleName -v totalMappedReads=$totalMappedReads 'BEGIN{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",sampleName,leftReadsIn,rightReadsIn,leftKept,rightKept,read1Alignments,read2Alignments,read1Mapped,read2Mapped,totalMappedReads);}{printf("\t%s",$1);}END{printf("\n");}' $i.flagstat >> $tophatOutputDir/flagstat.summary
 		else
 			bsub filterMaxHits --print-NH-stat-to $i.nhits.txt --in $i
 		fi
