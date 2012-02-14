@@ -48,7 +48,7 @@ for sampleName in `ls -d *`; do
 			
 			
 					
-			awk -v FS="\t" -v OFS=" " -v read1Alignments=$read1Alignments -v read2Alignments=$read2Alignments -v read1Mapped=$read1Mapped -v read2Mapped=$read2Mapped -v leftReadsIn=$left_reads_in -v rightReadsIn=$right_reads_in -v leftKept=$left_kept_reads -v rightKept=$right_kept_reads -v sampleName=$sampleName -v totalMappedReads=$totalMappedReads 'BEGIN{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",sampleName,leftReadsIn,rightReadsIn,leftKept,rightKept,read1Alignments,read2Alignments,read1Mapped,read2Mapped,totalMappedReads);}{printf("\t%s",$1);}END{printf("\n");}' $i.flagstat >> $tophatOutputDir/flagstat.summary
+			awk -v FS=" " -v read1Alignments=$read1Alignments -v read2Alignments=$read2Alignments -v read1Mapped=$read1Mapped -v read2Mapped=$read2Mapped -v leftReadsIn=$left_reads_in -v rightReadsIn=$right_reads_in -v leftKept=$left_kept_reads -v rightKept=$right_kept_reads -v sampleName=$sampleName -v totalMappedReads=$totalMappedReads 'BEGIN{printf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",sampleName,leftReadsIn,rightReadsIn,leftKept,rightKept,read1Alignments,read2Alignments,read1Mapped,read2Mapped,totalMappedReads);}{printf("\t%s",$1);}END{printf("\n");}' $i.flagstat >> $tophatOutputDir/flagstat.summary
 		else
 			bsub filterMaxHits --print-NH-stat-to $i.nhits.txt --in $i
 		fi
